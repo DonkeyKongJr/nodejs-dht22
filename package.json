@@ -1,0 +1,27 @@
+{
+  "name": "dht22",
+  "version": "1.0.0",
+  "description": "A small NodeJS project in which you read data from the dht22 temperature and humanidty sensor to send new measrements directly to firebase",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DonkeyKongJr/nodejs-dht22.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "DHT22",
+    "RaspberryPi"
+  ],
+  "author": "Patrick Schadler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DonkeyKongJr/nodejs-dht22/issues"
+  },
+  "homepage": "https://github.com/DonkeyKongJr/nodejs-dht22#readme",
+  "dependencies": {
+    "node-dht-sensor": "0.0.34"
+  }
+}
