@@ -21,25 +21,24 @@ app.post('/sensordata', function (req, res) {
     res.send(getSensorData());
 });
 
-
 function getSensorData() {
     var readout = readData();
-    return {
-        'temp': readout.temperature,
-        'humidity': readout.humidity,
-        'timestamp': new Date()
-    };
+    return convertSensorDataToJson(readout);
 }
 
 let db = firestoreInit();
 
+// initial call
+firestoreAddData(db, convertSensorDataToJson(readData()));
+
 setInterval(function(){
-    console.log("intervall exec")
-    
-        firestoreAddData(db, readData());
-    
+    firestoreAddData(db, convertSensorDataToJson(readData()));
 },5000);
 
-
-
-console.log('Temp is: ' + JSON.stringify(getSensorData()))
+function convertSensorDataToJson(sensorData){
+    return {
+        'temp': sensorData.temperature,
+        'humidity': sensorData.humidity,
+        'timestamp': new Date()
+    };
+}
