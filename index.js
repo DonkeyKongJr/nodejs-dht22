@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const readData = require('./read-data.js');
+const firestoreInit = require('./firestore-init');
+const firestoreAddData = require('./firestore-add-data');
+
 const server = app.listen(3000, () => console.log('Example app listening on port 3000!'))
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,14 +21,24 @@ app.post('/sensordata', function (req, res) {
     res.send(getSensorData());
 });
 
-
 function getSensorData() {
     var readout = readData();
+    return convertSensorDataToJson(readout);
+}
+
+let db = firestoreInit();
+
+// initial call
+firestoreAddData(db, convertSensorDataToJson(readData()));
+
+setInterval(function(){
+    firestoreAddData(db, convertSensorDataToJson(readData()));
+},3600);
+
+function convertSensorDataToJson(sensorData){
     return {
-        'temp': readout.temperature,
-        'humidity': readout.humidity,
+        'temp': sensorData.temperature,
+        'humidity': sensorData.humidity,
         'timestamp': new Date()
     };
 }
-
-console.log('Temp is: ' + JSON.stringify(getSensorData()))
