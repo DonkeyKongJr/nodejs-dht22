@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const readData = require('./read-data.js');
+const firestoreInit = require('./firestore-init');
+const firestoreAddData = require('./firestore-add-data');
+
 const server = app.listen(3000, () => console.log('Example app listening on port 3000!'))
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,5 +30,16 @@ function getSensorData() {
         'timestamp': new Date()
     };
 }
+
+let db = firestoreInit();
+
+setInterval(function(){
+    console.log("intervall exec")
+    
+        firestoreAddData(db, readData());
+    
+},5000);
+
+
 
 console.log('Temp is: ' + JSON.stringify(getSensorData()))
