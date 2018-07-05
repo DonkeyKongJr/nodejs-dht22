@@ -33,7 +33,7 @@ firestoreAddData(db, convertSensorDataToJson(readData()));
 
 setInterval(function(){
     firestoreAddData(db, convertSensorDataToJson(readData()));
-},3600);
+}, 900000);
 
 function convertSensorDataToJson(sensorData){
     return {
